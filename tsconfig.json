@@ -7,6 +7,7 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "CommonJS",
+		"noImplicitOverride": false,
     "baseUrl": "./src", // Base para los alias
     "paths": {
       "@controllers*": ["controllers/*"],
