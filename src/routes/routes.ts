@@ -1,12 +1,8 @@
-import { UserRepository } from "@repositoriesuserRepositories";
-import { UserService } from "@servicesuserServices";
-import { IUserService, User } from "types/UserTypes";
 import { Router } from "express";
+import { createUser, deleteUser, findUserById, findUsers, updateUser } from "@controllers/userController";
+import { createRoles, deleteRoles, findRoles, findRolesById, updateRoles } from "@controllersrolesController";
 
 const router = Router();
-
-const userRepository: UserRepository = new UserRepository();
-const userService: IUserService = new UserService(userRepository);
 
 export default () => {
     router.get("/health", (req, res) => {
@@ -14,32 +10,18 @@ export default () => {
     });
 
 		//User Routes
-		router.get("/users", async(req, res) => {
-			const users = await userService.findUsers();
-			res.json(users);
-		});
+		router.get("/users", findUsers);
+		router.post("/users", createUser);
+		router.get("/users/:id", findUserById);
+		router.put("/users/:id", updateUser);
+		router.delete("/users/:id", deleteUser);
 
-		router.post("/users", async (req, res) => {
-			const newUser:User = req.body;
-			const result = await userService.createUser(newUser);
-
-			res.json(result)
-		});
-
-		router.get("/users/:id", async (req, res) => {
-			const user = await userService.findUserById(req.params.id);
-			res.json(user);
-		});
-
-		router.put("/users/:id", async (req, res) => {
-			const user = await userService.updateUser(req.params.id, req.body);
-			res.json(user);
-		});
-
-		router.delete("/users/:id", async (req, res) => {
-			const user = await userService.deleteUser(req.params.id);
-			res.json(user);
-		});
+		//Roles Routes
+		router.get("/roles", findRoles);
+		router.post("/roles", createRoles);
+		router.get("/roles/:id", findRolesById);
+		router.put("/roles/:id", updateRoles);
+		router.delete("/roles/:id", deleteRoles);
 
     return router;
 };
