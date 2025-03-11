@@ -17,6 +17,11 @@ const UserSchema: Schema = new Schema<User>(
 			required: true,
 			unique: true
 		},
+		password: {
+				type: String,
+				required: true,
+				trim: true
+		}
 	},{
 		timestamps: true,
 		versionKey: false
