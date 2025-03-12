@@ -1,11 +1,13 @@
+import { Document } from "mongoose";
 import { Query, Repository } from "./RepositoryTypes";
 
-export interface User {
+export interface User extends Document {
 	id: string;
 	name: string;
 	username: string;
 	email: string;
 	password: string;
+	comparePassword(password: string): Promise<boolean>
 }
 
 export interface IUserRepository extends Repository<User> {
